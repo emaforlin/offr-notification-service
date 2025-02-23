@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "pb/";
+
+package notification.v1;
+
+message SendEmailNotificationReq {
+    string recipient = 1;
+    string subject = 2;
+    string body = 3;
+}
+
+message SendEmailNotificationRes {}
+
+service Notification {
+    rpc SendEmailNotification(SendEmailNotificationReq) returns (SendEmailNotificationRes) {}
+}
