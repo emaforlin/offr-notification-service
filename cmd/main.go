@@ -9,6 +9,7 @@ import (
 
 	"github.com/emaforlin/notification-service/config"
 	"github.com/emaforlin/notification-service/endpoints"
+	"github.com/emaforlin/notification-service/interceptors"
 	"github.com/emaforlin/notification-service/pb"
 	"github.com/emaforlin/notification-service/service"
 	"github.com/emaforlin/notification-service/transport"
@@ -37,7 +38,8 @@ func main() {
 		logger.Fatal("Failed to start the server", zap.Error(err))
 	}
 
-	baseServer := grpc.NewServer()
+	baseServer := grpc.NewServer(grpc.UnaryInterceptor(interceptors.UnaryValidator))
+
 	pb.RegisterNotificationServer(baseServer, grpcServer)
 
 	reflection.Register(baseServer)
