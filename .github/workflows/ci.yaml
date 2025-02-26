@@ -1,13 +1,23 @@
 name: ci
 on:
   push:
+    branches:
+      - 'main'
     tags:
-      - v1.**
+      - 'v1.**'
 jobs:
   build:
     environment: cicd
     runs-on: ubuntu-latest
     steps:
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=semver,pattern={{version}}
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -24,6 +34,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags:
-            - "${{ github.repository_owner }}/gjallarhorn:latest"
-            - "${{ github.repository_owner }}/gjallarhorn:${{ github.ref_name }}"
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/gjallarhorn:latest
