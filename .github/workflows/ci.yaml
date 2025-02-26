@@ -25,5 +25,5 @@ jobs:
         with:
           push: true
           tags:
-            - ${{ github.repository_owner }}/gjallarhorn:latest
-            - ${{ github.repository_owner }}/gjallarhorn:${{ github.ref_name }}
+            - "${{ github.repository_owner }}/gjallarhorn:latest"
+            - "${{ github.repository_owner }}/gjallarhorn:${{ github.ref_name }}"
