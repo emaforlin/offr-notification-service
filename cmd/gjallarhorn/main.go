@@ -15,7 +15,14 @@ import (
 	"github.com/emaforlin/notification-service/transport"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/health"
+	healthgrpc "google.golang.org/grpc/health/grpc_health_v1"
+	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/reflection"
+)
+
+var (
+	system = "" // system endpoint
 )
 
 func main() {
@@ -40,9 +47,13 @@ func main() {
 
 	baseServer := grpc.NewServer(grpc.UnaryInterceptor(interceptors.ProtoValidateInterceptor))
 
+	healthcheck := health.NewServer()
+	healthgrpc.RegisterHealthServer(baseServer, healthcheck)
+	reflection.Register(baseServer)
+
 	pb.RegisterNotificationServer(baseServer, grpcServer)
 
-	reflection.Register(baseServer)
+	healthcheck.SetServingStatus(system, healthpb.HealthCheckResponse_SERVING)
 
 	go func() {
 		if err := baseServer.Serve(listener); err != nil {
