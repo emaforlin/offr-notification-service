@@ -14,8 +14,3 @@ Gjallarhorn is a powerful and scalable notification service designed to handle m
 | Method | Description |
 | --- | --- |
 | SendEmail (Unary) | Send a single email |
-<!-- | SendEmailBatch (Stream) | Send a batch of emails | -->
-
-
-## License
-This project is licensed under the MIT License.
