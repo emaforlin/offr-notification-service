@@ -1,0 +1,17 @@
+syntax = "proto3";
+option go_package = "pb/";
+package notification.v1;
+
+import "buf/validate/validate.proto";
+
+message SendEmailNotificationReq {
+    string recipient = 1 [(buf.validate.field).string.email = true];
+    string subject = 2 [(buf.validate.field).string.min_len = 1];
+    string body = 3 [(buf.validate.field).string.min_len = 10];
+}
+
+message SendEmailNotificationRes {}
+
+service Notification {
+    rpc SendEmailNotification(SendEmailNotificationReq) returns (SendEmailNotificationRes) {}
+}
