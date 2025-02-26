@@ -11,6 +11,6 @@ Gjallarhorn is a powerful and scalable notification service designed to handle m
 
 ## API Endpoints
 
-| Method | Description |
+| RPC Method | Description |
 | --- | --- |
 | SendEmail (Unary) | Send a single email |
