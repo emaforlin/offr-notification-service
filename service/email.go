@@ -33,7 +33,7 @@ func (ms *NotificationService) startMailDaemon() {
 		case <-time.After(30 * time.Second):
 			if open {
 				if err := s.Close(); err != nil {
-					ms.logger.Error("Frror closing SMTP connection", zap.Error(err))
+					ms.logger.Error("Error closing SMTP connection", zap.Error(err))
 				}
 				open = false
 			}
