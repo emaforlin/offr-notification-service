@@ -31,8 +31,9 @@ func StartGRPCServer() fx.Option {
 
 		serverImpl := NewGRPCServer(cfg, notificationSvc)
 
-		// DISABLE for prod
-		reflection.Register(grpcServer)
+		if cfg.App.Mode == "dev" {
+			reflection.Register(grpcServer)
+		}
 
 		pb.RegisterNotificationServer(grpcServer, serverImpl)
 

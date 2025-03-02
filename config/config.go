@@ -1,6 +1,7 @@
 package config
 
 import (
+	"flag"
 	"log"
 
 	"github.com/spf13/viper"
@@ -13,6 +14,7 @@ type Config struct {
 }
 
 type AppConfig struct {
+	Mode string
 	Port uint16
 }
 
@@ -26,6 +28,16 @@ type SMTPConfig struct {
 var config *Config
 
 func Init() {
+	var mode string
+
+	flag.StringVar(&mode, "mode", "dev", "`dev` for development mode. `prod` for production mode")
+	flag.Parse()
+
+	// normalize flags
+	if mode != "dev" && mode != "prod" {
+		mode = "dev"
+	}
+
 	viper.SetConfigType("yaml")
 	viper.SetConfigName("config")
 	viper.AddConfigPath(".config/")
@@ -38,6 +50,7 @@ func Init() {
 	config = &Config{
 		App: AppConfig{
 			Port: viper.GetUint16("service.port"),
+			Mode: mode,
 		},
 		SMTP: SMTPConfig{
 			Host: viper.GetString("smtp.host"),
