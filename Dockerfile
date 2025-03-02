@@ -12,15 +12,15 @@ COPY . .
 
 RUN buf generate
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o Gjallarhorn ./cmd/gjallarhorn
+RUN CGO_ENABLED=0 GOOS=linux go build -o Whisper ./cmd/whisper
 
 FROM alpine:3.21.3
 
 WORKDIR /app
 
-COPY --from=builder /src/Gjallarhorn /app
+COPY --from=builder /src/Whisper /app
 
-CMD [ "/app/Gjallarhorn" ]
+CMD [ "/app/Whisper" ]
 
 
 
