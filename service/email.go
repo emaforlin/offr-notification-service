@@ -4,12 +4,12 @@ import (
 	"context"
 	"time"
 
-	"github.com/emaforlin/notification-service/models"
+	"github.com/emaforlin/notification-service/dto"
 	"go.uber.org/zap"
 	"gopkg.in/gomail.v2"
 )
 
-func (ms *mailService) startMailDaemon() {
+func (ms *NotificationService) startMailDaemon() {
 	var s gomail.SendCloser
 	var err error
 	open := false
@@ -41,12 +41,12 @@ func (ms *mailService) startMailDaemon() {
 	}
 }
 
-func (ms *mailService) Stop() {
+func (ms *NotificationService) Stop() {
 	close(ms.mq)
 }
 
 // SendEmailNotification implements Service.
-func (s *mailService) SendEmailNotification(ctx context.Context, data models.EmailDto) error {
+func (s *NotificationService) SendEmailNotification(ctx context.Context, data dto.EmailDto) error {
 	msg := gomail.NewMessage()
 	msg.SetHeader("From", s.emailDialer.Username)
 	msg.SetHeader("To", data.Recipient)

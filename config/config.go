@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/spf13/viper"
+	"go.uber.org/fx"
 )
 
 type Config struct {
@@ -49,4 +50,9 @@ func Init() {
 
 func GetConfig() *Config {
 	return config
+}
+
+func ProvideConfig() fx.Option {
+	Init()
+	return fx.Provide(GetConfig)
 }

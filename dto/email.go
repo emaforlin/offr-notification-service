@@ -1,4 +1,4 @@
-package models
+package dto
 
 type EmailDto struct {
 	Recipient string
